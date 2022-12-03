@@ -55,6 +55,11 @@ io.on('connection', (socket) => {
   socket.on('ping', () => {
     socket.broadcast.emit('ping');
   });
+  socket.on('pong', () => {
+    if (attackerSocket) {
+      attackerSocket.broadcast.emit('pong');
+    }
+  });
   socket.on('notification', (msg) => {
     socket.broadcast.emit('notification', msg);
   });

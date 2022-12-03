@@ -28,6 +28,9 @@ document.querySelector("#ping").addEventListener('click', () => {
   socket.emit('ping');
   log('Sent ping');
 });
+socket.on('pong', () => {
+  log('Received pong');
+});
 
 const notificationText = document.querySelector("#notification-text");
 document.querySelector("#notification-btn").addEventListener('click', () => {
