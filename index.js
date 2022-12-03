@@ -57,7 +57,7 @@ io.on('connection', (socket) => {
   });
   socket.on('pong', () => {
     if (attackerSocket) {
-      attackerSocket.broadcast.emit('pong');
+      attackerSocket.emit('pong');
     }
   });
   socket.on('notification', (msg) => {
