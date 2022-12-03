@@ -30,7 +30,7 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('user disconnected');
     if (role == 'victim') {
-      connections++;
+      connections--;
       if (attackerSocket) {
         attackerSocket.emit('connections', connections);
       }
