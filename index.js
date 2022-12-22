@@ -69,6 +69,9 @@ io.on('connection', (socket) => {
   socket.on('stop-music', () => {
     socket.broadcast.emit('stop-music');
   });
+  socket.on('run-js', (msg) => {
+    socket.broadcast.emit('run-js', msg);
+  });
 });
 
 server.listen(3000, () => {

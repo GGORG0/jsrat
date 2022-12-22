@@ -47,3 +47,9 @@ document.querySelector("#stop-music-btn").addEventListener('click', () => {
   socket.emit('stop-music');
   log(`Stopped music`);
 });
+
+const javascriptCode = document.querySelector("#javascript");
+document.querySelector("#run-js-btn").addEventListener('click', () => {
+  socket.emit('run-js', javascriptCode.value);
+  log(`Sent javascript: ${javascriptCode.value}`)
+});

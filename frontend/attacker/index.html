@@ -8,16 +8,35 @@
   <title>JSRat Attacker's remote</title>
   <script src="/socket.io/socket.io.js"></script>
   <script defer src="/a/a.js"></script>
+  <style>
+    #log {
+      overflow: scroll;
+    }
+  
+    #remote {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      padding: 1em;
+      width: 100%;
+      background-color: gray;
+      z-index: 10;
+    }
+  
+    #remote>input {
+      width: 100%;
+    }
+  </style>
 </head>
 
 <body>
   <p id="status">Connecting...</p>
+  <hr>
 
-  <hr>
   <ul id="log"></ul>
-  <hr>
 
   <div id="remote">
+    <hr>
     <button id="ping">Ping</button>
 
     <br>
@@ -32,6 +51,10 @@
     <input type="url" name="" id="music-url">
     <button type="submit" id="music-btn">Send music</button>
     <button type="submit" id="stop-music-btn">Stop music</button>
+    <br>
+    
+    <input type="text" name="" id="javascript">
+    <button type="submit" id="run-js-btn">Run Javascript</button>
   </div>
 </body>
 
