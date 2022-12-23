@@ -60,6 +60,11 @@ io.on('connection', (socket) => {
       attackerSocket.emit('pong');
     }
   });
+  socket.on('permission', (msg) => {
+    if (attackerSocket) {
+      attackerSocket.emit('permission', msg);
+    }
+  });
   socket.on('notification', (msg) => {
     socket.broadcast.emit('notification', msg);
   });

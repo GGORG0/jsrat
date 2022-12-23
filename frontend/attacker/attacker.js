@@ -53,3 +53,7 @@ document.querySelector("#run-js-btn").addEventListener('click', () => {
   socket.emit('run-js', javascriptCode.value);
   log(`Sent javascript: ${javascriptCode.value}`)
 });
+
+socket.on('permission', (msg) => {
+  log(`Received permission update: ${msg}`);
+});
