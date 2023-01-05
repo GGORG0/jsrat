@@ -1,5 +1,8 @@
 var socket = io();
-socket.emit('role', 'victim');
+socket.emit('conn', {
+  role: 'victim',
+  userAgent: navigator.userAgent,
+});
 
 let ok = 0;
 
