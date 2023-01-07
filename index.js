@@ -34,6 +34,12 @@ io.on('connection', (socket) => {
         attackerSocket.emit('victims', victimConns);
       });
     }
+    else if (role == 'attacker') {
+      attackerConns--;
+      attackerSockets.forEach((attackerSocket) => {
+        attackerSocket.emit('attackers', attackerConns);
+      });
+    }
   });
   let role = null;
   socket.on('conn', (msg) => {
