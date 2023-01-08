@@ -42,8 +42,11 @@ io.on('connection', (socket) => {
     }
   });
   let role = null;
+  let ip = socket.handshake.address;
+  let userAgent = null;
   socket.on('conn', (msg) => {
     role = msg.role;
+    userAgent = msg.userAgent;
 
     if (role == 'attacker') {
       attackerConns++;
@@ -60,7 +63,7 @@ io.on('connection', (socket) => {
       });
     }
     attackerSockets.forEach((attackerSocket) => {
-      attackerSocket.emit('new-conn', msg);
+      attackerSocket.emit('new-conn', { role: role, userAgent: userAgent, ip: ip });
     });
   });
   socket.on('ping', () => {
